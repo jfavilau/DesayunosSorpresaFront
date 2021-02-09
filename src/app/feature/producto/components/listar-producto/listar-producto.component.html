@@ -1,8 +1,18 @@
-<p>listar-producto works!</p>
-<div id="productos">
-  <ul class="productos">
-    <li *ngFor="let item of listaProductos | async">
-      <span>{{item.id}}</span> {{item.descripcion}}
-    </li>
-  </ul>
+<div class="container">
+  <div class="titulos">
+    <h1>Desayunos Sorpresa</h1>
+    <p> Disfruta de los mejores desayunos de la ciudad</p>
+  </div>
+  <div id="productos" class="container mt6">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-3 text-center" *ngFor="let item of listaProductos | async">
+        <img class="img-fluid" src="{{item.imagen}}" alt="canasta de productos"/>
+        <h6>{{item.nombre}}</h6>
+        <p>$ {{item.precio}}</p>
+        <button class="btn btn-primary" data-id="{{item.id}}">Comprar</button>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
 </div>

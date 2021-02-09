@@ -18,15 +18,17 @@ export class CrearProductoComponent implements OnInit {
     this.construirFormularioProducto();
   }
 
-  cerar() {
+  crear() {
     this.productoServices.guardar(this.productoForm.value);
   }
 
   private construirFormularioProducto() {
     this.productoForm = new FormGroup({
-      id: new FormControl('', [Validators.required]),
+      nombre: new FormControl('', [Validators.required]),
       descripcion: new FormControl('', [Validators.required, Validators.minLength(LONGITUD_MINIMA_PERMITIDA_TEXTO),
-                                                             Validators.maxLength(LONGITUD_MAXIMA_PERMITIDA_TEXTO)])
+                                                             Validators.maxLength(LONGITUD_MAXIMA_PERMITIDA_TEXTO)]),
+      imagen: new FormControl('', [Validators.required]),
+      precio: new FormControl('', [Validators.required])
     });
   }
 
