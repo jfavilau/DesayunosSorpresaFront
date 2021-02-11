@@ -14,7 +14,7 @@ export class PedidoService {
   }
 
   public guardar(pedido: Pedido) {
-    return this.http.doPost<Pedido, boolean>(`${environment.endpoint}/productos`, pedido,
+    return this.http.doPost<Pedido, boolean>(`${environment.endpoint}/pedidos`, pedido,
                                                 this.http.optsName('Realizar pedidos'));
   }
 

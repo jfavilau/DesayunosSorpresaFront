@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  endpoint: '/desayunos-sorpresa'
+  endpoint: '/desayunos-sorpresa',
+  abstractKey: '93693915bbb74c2991519130aa292982'
 };
 
 /*

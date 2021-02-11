@@ -1,18 +1,16 @@
-<div class="container">
+<div class="container text-center" >
   <div class="titulos">
     <h1>Desayunos Sorpresa</h1>
     <p> Disfruta de los mejores desayunos de la ciudad</p>
   </div>
-  <div id="productos" class="container mt6">
+  <div id="productos" class="container-fluid">
     <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-3 text-center" *ngFor="let item of listaProductos | async">
+      <div class="colxs-12 col-sm-3" *ngFor="let item of listaProductos | async">
         <img class="img-fluid" src="{{item.imagen}}" alt="canasta de productos"/>
         <h6>{{item.nombre}}</h6>
         <p>$ {{item.precio}}</p>
-        <button class="btn btn-primary" data-id="{{item.id}}">Comprar</button>
+        <button class="btn btn-primary btn-small" data-id="{{item.id}}">Comprar producto</button>
       </div>
-      <div class="col-md-1"></div>
     </div>
   </div>
 </div>

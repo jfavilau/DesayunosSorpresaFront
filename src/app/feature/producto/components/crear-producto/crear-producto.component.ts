@@ -19,7 +19,9 @@ export class CrearProductoComponent implements OnInit {
   }
 
   crear() {
-    this.productoServices.guardar(this.productoForm.value);
+    this.productoServices.guardar(this.productoForm.value).subscribe(data =>{
+      console.log(data);
+    });
   }
 
   private construirFormularioProducto() {
