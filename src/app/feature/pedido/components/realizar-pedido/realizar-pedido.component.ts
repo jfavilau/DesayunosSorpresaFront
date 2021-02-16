@@ -8,10 +8,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { Zona } from '../../shared/model/zona';
+import { IItem } from '../../../../interfaces/item.interface';
 import { Observable } from 'rxjs';
 
 const LONGITUD_MINIMA_PERMITIDA_TEXTO = 3;
-const LONGITUD_MAXIMA_PERMITIDA_TEXTO = 40;
+const LONGITUD_MAXIMA_PERMITIDA_TEXTO = 200;
 
 @Component({
   selector: 'app-realizar-pedido',
@@ -23,15 +24,15 @@ export class RealizarPedidoComponent implements OnInit {
 
   @ViewChild("modalMensaje") modal: ElementRef;
 
-  valorAdicional: number = 10000;
   isFestivo: boolean = false;
   fechaEntrega : string;
   arrayPedido: [];
   mensajeModal: string;
   pedidoForm: FormGroup;
   lista: Zona[] =[];
-  valorDomicilio: number =0;
-  valorProducto: number;
+  items: Array<IItem>;
+  precioTotal:number = 0;
+  cantidadTotal:number = 0;
 
   openModal: NgbModalRef
 
@@ -46,18 +47,23 @@ export class RealizarPedidoComponent implements OnInit {
     this.lista.push(new Zona("Rionegro y otras ciudades",70000));
 
     this.listaProductos = this.productoService.consultar();
-    this.valorDomicilio = Number(this.pedidoForm.value.zona);
 
     this.carritoService.currentDataCart$.subscribe(x=>{
         if(x){
-          console.log(x)
            this.pedidoForm.patchValue({
-                          producto : x
-                        });
-          console.log(this.pedidoForm.value.producto);
+               producto : x
+           });
+           this.items = x;
+           this.cantidadTotal = x.length;
+           this.precioTotal = x.reduce((sum, current) => sum + (current.precio * current.cantidad), 0);
+        }else{
+            this.router.navigate(['/productos'], {skipLocationChange: true});
         }
+     });
 
-     })
+     this.pedidoForm.patchValue({
+             total: this.precioTotal + Number(this.pedidoForm.value.valorAdicional) + Number(this.pedidoForm.value.zona)
+         });
   }
 
    realizarPedido(){
@@ -84,47 +90,46 @@ export class RealizarPedidoComponent implements OnInit {
   }
 
   onItemChange(){
-  console.log(this.valorDomicilio)
       this.calendarService.consultar(this.pedidoForm.value.fechaEntrega).subscribe(data => {
-
-      if (data.length >0){
-        this.isFestivo = true;
-        this.valorDomicilio = Number(this.pedidoForm.value.zona) + this.valorAdicional;
-      }
-      this.pedidoForm.patchValue({
-        total: Number(this.pedidoForm.value.valorProducto) + this.valorDomicilio
-                          });
+         if (data.length > 0){
+           this.pedidoForm.patchValue({
+              valorAdicional: 10000
+           });
+           this.pedidoForm.patchValue({
+              total: this.precioTotal + Number(this.pedidoForm.value.valorAdicional) + Number(this.pedidoForm.value.zona)
+           });
+           console.log(" Es festivo");
+           console.log(Number(this.pedidoForm.value.valorAdicional));
+         }else{
+            this.pedidoForm.patchValue({
+              valorAdicional: 0
+            });
+            this.pedidoForm.patchValue({
+                          total: this.precioTotal + Number(this.pedidoForm.value.valorAdicional) + Number(this.pedidoForm.value.zona)
+            });
+            console.log("No Es festivo");
+            console.log(Number(this.pedidoForm.value.valorAdicional));
+         }
       })
-      console.log(this.valorDomicilio)
   }
 
   onSelectZoneChange(){
-  console.log(this.pedidoForm.value.fechaEntrega);
-  if (this.isFestivo){
-      this.valorDomicilio = Number(this.pedidoForm.value.zona)+ this.valorAdicional;
-  }else{
-      this.valorDomicilio = Number(this.pedidoForm.value.zona);
+    console.log(this.pedidoForm.value.fechaEntrega);
+    this.pedidoForm.patchValue({
+        total: this.precioTotal + Number(this.pedidoForm.value.valorAdicional) + Number(this.pedidoForm.value.zona)
+    });
   }
 
-        this.pedidoForm.patchValue({
-          total: Number(this.pedidoForm.value.valorProducto) + this.valorDomicilio
-        });
-    }
-
-  onSelectProductChange(value){
-  console.log(this.valorDomicilio)
-  this.listaProductos.subscribe(data =>{
-      for (let dato of data){
-          if (dato.id == value){
-              this.pedidoForm.patchValue({
-                valorProducto: dato.precio,
-                total: dato.precio + this.valorDomicilio
-              });
-          }
+   public eliminarItem(producto:IItem)
+      {
+        this.carritoService.removeElementCart(producto);
+         if (this.cantidadTotal <= 0){
+                this.router.navigate(['/productos']);
+         }
+         this.pedidoForm.patchValue({
+                 total: this.precioTotal + Number(this.pedidoForm.value.valorAdicional) + Number(this.pedidoForm.value.zona)
+             });
       }
-  })
-
-  }
 
   private construirFormularioPedido() {
     this.pedidoForm = new FormGroup({
@@ -140,9 +145,8 @@ export class RealizarPedidoComponent implements OnInit {
       fechaEntrega: new FormControl('', [Validators.required]),
       zona: new FormControl(10000, [Validators.required]),
       producto: new FormControl('', [Validators.required]),
-      valorProducto: new FormControl(0),
-      total: new FormControl(0, [Validators.required]),
-      estado: new FormControl('GENERADO', [Validators.required])
+      valorAdicional: new FormControl(0),
+      total: new FormControl(0)
     });
 
   }

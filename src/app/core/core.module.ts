@@ -9,14 +9,15 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpService } from './services/http.service';
 import { ManejadorError } from './interceptor/manejador-error';
 import { RouterModule } from '@angular/router';
+import { CarritoComponent } from '../feature/carrito/carrito.component';
 
 @NgModule({
-  declarations: [ToolbarComponent, NavbarComponent],
+  declarations: [ToolbarComponent, NavbarComponent, CarritoComponent],
   imports: [
     CommonModule,
     RouterModule
   ],
-  exports: [ToolbarComponent, NavbarComponent],
+  exports: [ToolbarComponent, NavbarComponent, CarritoComponent],
   providers: [
     HttpService,
     SecurityGuard,

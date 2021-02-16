@@ -1,85 +1,94 @@
-<div class="titulos col-xs-12 "><h1>Realizar Pedido</h1></div>
-<hr>
-<form [formGroup]="pedidoForm" (ngSubmit)="realizarPedido()">
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="nombresApellidos">Nombres y Apellidos*: </label>
-    <input validar type="text" class="form-control" id="nombresApellidos" formControlName="nombresApellidos">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="email">E-mail*: </label>
-    <input validar type="email" id="email" class="form-control"
-           formControlName="email">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4 hide">
-    <label for="producto">Elegir Producto: </label>
-    <select multiple #product (change)="onSelectProductChange(product.value)"class="form-control" id="producto" formControlName="producto">
-      <option [value]="producto" *ngFor="let producto of listaProductos | async">{{producto.nombre}}</option>
-    </select>
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="envia">Persona que envía: </label>
-    <input validar type="text" class="form-control" id="envia" formControlName="envia">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="recibe">Persona que recibe*: </label>
-    <input validar type="text" class="form-control" id="recibe" formControlName="recibe">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="direccion">Dirección de Entrega*: </label>
-    <input validar type="text" class="form-control" id="direccion" formControlName="direccion">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-  <label for="barrio">Barrio: </label>
-  <input validar type="text" class="form-control" id="barrio" formControlName="barrio">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="zona">Zona: </label>
-    <select (change)="onSelectZoneChange()"class="form-control" id="zona" formControlName="zona">
-      <option [value]="objeto.valor" *ngFor="let objeto of lista">{{objeto.zona}}</option>
-    </select>
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="celular">Celular*: </label>
-    <input validar type="text" class="form-control" id="celular" formControlName="celular">
-  </div>
+<div class="row">
+  <div class="col-xs-12 col-md-5 offset-1">
+    <div class="titulos col-xs-12 "><h3>Realizar Pedido</h3></div>
+    <hr>
+    <form [formGroup]="pedidoForm" (ngSubmit)="realizarPedido()">
+      <div class="form-group col-xs-12">
+        <label for="nombresApellidos">Nombres y Apellidos*: </label>
+        <input validar type="text" class="form-control" id="nombresApellidos" formControlName="nombresApellidos">
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="email">E-mail*: </label>
+        <input validar type="email" id="email" class="form-control"
+               formControlName="email">
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="envia">Persona que envía: </label>
+        <input validar type="text" class="form-control" id="envia" formControlName="envia">
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="recibe">Persona que recibe*: </label>
+        <input validar type="text" class="form-control" id="recibe" formControlName="recibe">
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="direccion">Dirección de Entrega*: </label>
+        <input validar type="text" class="form-control" id="direccion" formControlName="direccion">
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="barrio">Barrio: </label>
+        <input validar type="text" class="form-control" id="barrio" formControlName="barrio">
+      </div>
+      <div class="form-group col-xs-12 ">
+        <label for="zona">Zona: </label>
+        <select (change)="onSelectZoneChange()" class="form-control" id="zona" formControlName="zona">
+          <option [value]="objeto.valor" *ngFor="let objeto of lista">{{objeto.zona}}</option>
+        </select>
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="celular">Celular*: </label>
+        <input validar type="text" class="form-control" id="celular" formControlName="celular">
+      </div>
 
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="mensajeTarjeta">Mensaje de la tarjeta: </label>
-    <textarea validar type="textarea" class="form-control" id="mensajeTarjeta" formControlName="mensajeTarjeta"></textarea>
+      <div class="form-group col-xs-12">
+        <label for="mensajeTarjeta">Mensaje de la tarjeta: </label>
+        <textarea validar type="textarea" class="form-control" id="mensajeTarjeta"
+                  formControlName="mensajeTarjeta"></textarea>
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="fechaEntrega">Fecha de entrega*: </label>
+        <input (change)="onItemChange()" validar type="date" class="form-control" id="fechaEntrega"
+               placeholder="Fecha de entrega"
+               formControlName="fechaEntrega">
+      </div>
+      <div class="form-group col-xs-12">
+        <input type="hidden" class="form-control" id="producto"
+               formControlName="producto">
+      </div>
+      <div class="col-xs-12">
+        <button type="submit" class="btn btn-primary btn-small" [disabled]="pedidoForm.invalid">Realizar Pedido</button>
+      </div>
+    </form>
   </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="fechaEntrega">Fecha de entrega*: </label>
-    <input (change)="onItemChange()" validar type="date" class="form-control" id="fechaEntrega" placeholder="Fecha de entrega"
-           formControlName="fechaEntrega">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <input validar type="hidden" class="form-control" id="estado" placeholder="Estado del pedido"
-           formControlName="estado">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <input type="hidden" class="form-control" id="valorProducto"
-           formControlName="valorProducto">
-  </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="total">Total: </label>
-    <input validar type="number" class="form-control" id="total" placeholder="Estado del pedido" readonly
-           formControlName="total">
-  </div>
-  <div class="col-xs-12 col-sm-4 offset-4">
-    <button type="submit" class="btn btn-primary btn-small" [disabled]="pedidoForm.invalid">Realizar Pedido</button>
-  </div>
-</form>
-
-<ng-template #modalMensaje let-modal>
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
+  <div class="col-md-5 offset-1">
+    <div class="titulos col-xs-12"><h3>Verifica tu orden</h3></div>
+    <hr>
+    <ul class="shopping-cart-items">
+      <li class="clearfix" *ngFor="let item of items">
+        <span class="item-name">{{item.nombre}}</span><br>
+        <span class="item-quantity">Cantidad: {{item.cantidad}}</span><br>
+        <span class="item-price">${{item.precio}}</span><br>
+        <button type="button" class="btn btn-danger ml-2" (click)="eliminarItem(item)"><i class="fa fa-trash fa-1"
+                                                                                          aria-hidden="true"></i>
         </button>
-      </div>
-      <div class="modal-body">
-        <p><span>{{mensajeModal}}</span></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-samll" (click)="modal.close('Save click')">Continuar</button>
-      </div>
+      </li>
+    </ul>
+    <p><strong>Subtotal Productos: </strong>${{precioTotal}}</p>
+    <p><strong>Valor Domicilio Zona: </strong>${{pedidoForm.value.zona}}</p>
+    <p><strong>Valor adicional Domicilio: </strong>${{pedidoForm.value.valorAdicional}}</p>
+    <p><strong>Total: </strong>${{pedidoForm.value.total}}</p>
+
+  </div>
+</div>
+<ng-template #modalMensaje let-modal>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><span>{{mensajeModal}}</span></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-small" (click)="modal.close('Save click')">Continuar</button>
+  </div>
 </ng-template>

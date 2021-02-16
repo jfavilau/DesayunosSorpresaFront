@@ -3,7 +3,7 @@
     <div class="shopping-cart-header">
       <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">{{cantidadTotal}}</span>
       <div class="shopping-cart-total">
-        <span class="lighter-text">Total:</span>
+        <span class="lighter-text">Subtotal Productos:</span>
         <span class="main-color-text">${{precioTotal}}</span>
       </div>
     </div> <!--end shopping-cart-header -->
@@ -12,11 +12,11 @@
       <li class="clearfix" *ngFor="let item of items">
         <span class="item-name">{{item.nombre}}</span>
         <span class="item-price">${{item.precio}}</span>
-        <span class="item-quantity">Quantity: {{item.cantidad}}</span>
-        <button type="button" class="btn btn-danger ml-4" (click)="remove(item)">Remove</button>
+        <span class="item-quantity">Cantidad: {{item.cantidad}}</span>
+        <button type="button" class="btn btn-danger ml-2" (click)="eliminarItem(item)"><i class="fa fa-trash fa-1" aria-hidden="true"></i></button>
       </li>
     </ul>
 
-    <a class="button" (click)="goToCart()" >Checkout</a>
+    <a class="button" (click)="irRealizarPedido()" >Checkout</a>
   </div> <!--end shopping-cart -->
 </div> <!--end container -->
