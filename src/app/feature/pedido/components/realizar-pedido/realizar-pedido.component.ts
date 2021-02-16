@@ -3,6 +3,7 @@ import { ProductoService } from '@producto/shared/service/producto.service';
 import { Producto } from '@producto/shared/model/producto';
 import { PedidoService } from '../../shared/service/pedido.service';
 import { CalendarService } from '../../shared/service/calendar.service';
+import { CarritoService } from '../../../carrito/service/carrito.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -34,7 +35,7 @@ export class RealizarPedidoComponent implements OnInit {
 
   openModal: NgbModalRef
 
-  constructor(protected pedidoService: PedidoService, protected productoService: ProductoService, protected calendarService: CalendarService, private router: Router, private modalService: NgbModal) { }
+  constructor(protected pedidoService: PedidoService, protected productoService: ProductoService, protected calendarService: CalendarService, private router: Router, private modalService: NgbModal, protected carritoService: CarritoService) { }
 
   ngOnInit() {
     this.construirFormularioPedido();
@@ -46,6 +47,17 @@ export class RealizarPedidoComponent implements OnInit {
 
     this.listaProductos = this.productoService.consultar();
     this.valorDomicilio = Number(this.pedidoForm.value.zona);
+
+    this.carritoService.currentDataCart$.subscribe(x=>{
+        if(x){
+          console.log(x)
+           this.pedidoForm.patchValue({
+                          producto : x
+                        });
+          console.log(this.pedidoForm.value.producto);
+        }
+
+     })
   }
 
    realizarPedido(){
@@ -119,8 +131,8 @@ export class RealizarPedidoComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       nombresApellidos: new FormControl('', [Validators.required, Validators.minLength(LONGITUD_MINIMA_PERMITIDA_TEXTO),
                                                              Validators.maxLength(LONGITUD_MAXIMA_PERMITIDA_TEXTO)]),
-      de: new FormControl(''),
-      para: new FormControl('', [Validators.required]),
+      envia: new FormControl(''),
+      recibe: new FormControl('', [Validators.required]),
       direccion: new FormControl('', [Validators.required]),
       barrio: new FormControl(''),
       celular: new FormControl('', [Validators.required]),

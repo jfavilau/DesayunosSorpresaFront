@@ -9,7 +9,7 @@
         <img class="img-fluid" src="{{item.imagen}}" alt="canasta de productos"/>
         <h6>{{item.nombre}}</h6>
         <p>$ {{item.precio}}</p>
-        <button class="btn btn-primary btn-small" data-id="{{item.id}}">Comprar producto</button>
+        <button class="btn btn-primary btn-small" data-id="{{item.id}}" (click)="addCart(item)">Comprar producto</button>
       </div>
     </div>
   </div>

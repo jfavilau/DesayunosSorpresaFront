@@ -9,11 +9,19 @@ import { MenuItem } from '@core/modelo/menu-item';
 })
 export class AppComponent {
   title = 'app-base';
+
+   public carritoAbierto:boolean = false;
+    public cantProducts:number = 0;
+
   public companies: MenuItem[] = [
     { url: '/home', nombre: 'Home' },
     { url: '/productos/listar', nombre: 'Productos' },
     { url: '/pedidos/listar', nombre: 'Pedidos' }
   ];
+
+  public cart(){
+      this.carritoAbierto = !this.carritoAbierto;
+    }
 
 
 }

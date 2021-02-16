@@ -7,6 +7,7 @@ import { HomeComponent } from '@home/home.component';
 import { ProductoModule } from '@producto/producto.module';
 import { CoreModule } from '@core/core.module';
 import { CookieService } from 'ngx-cookie-service';
+import { CarritoComponent } from './feature/carrito/carrito.component';
 
 
 
@@ -14,7 +15,8 @@ import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    CarritoComponent
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,7 @@
             <th scope="col">Fecha de pedido</th>
             <th scope="col">Fecha de entrega</th>
             <th scope="col">Estado</th>
+            <th scope="col">Total</th>
           </tr>
           <tr *ngFor="let item of listaPedidos | async">
             <td>{{item.id}}</td>
@@ -22,6 +23,7 @@
             <td>{{item.fechaPedido}}</td>
             <td>{{item.fechaEntrega}}</td>
             <td>{{item.estado}}</td>
+            <td>{{item.total}}</td>
           </tr>
           <tr>
             <td>

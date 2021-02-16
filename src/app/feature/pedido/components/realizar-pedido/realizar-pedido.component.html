@@ -10,19 +10,19 @@
     <input validar type="email" id="email" class="form-control"
            formControlName="email">
   </div>
-  <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="zona">Elegir Producto: </label>
-    <select #product (change)="onSelectProductChange(product.value)"class="form-control" id="producto" formControlName="producto">
-      <option [value]="producto.id" *ngFor="let producto of listaProductos | async">{{producto.nombre}}</option>
+  <div class="form-group col-xs-12 col-sm-4 offset-4 hide">
+    <label for="producto">Elegir Producto: </label>
+    <select multiple #product (change)="onSelectProductChange(product.value)"class="form-control" id="producto" formControlName="producto">
+      <option [value]="producto" *ngFor="let producto of listaProductos | async">{{producto.nombre}}</option>
     </select>
   </div>
   <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="de">Persona que envía: </label>
-    <input validar type="text" class="form-control" id="de" formControlName="de">
+    <label for="envia">Persona que envía: </label>
+    <input validar type="text" class="form-control" id="envia" formControlName="envia">
   </div>
   <div class="form-group col-xs-12 col-sm-4 offset-4">
-    <label for="de">Persona que recibe*: </label>
-    <input validar type="text" class="form-control" id="para" formControlName="para">
+    <label for="recibe">Persona que recibe*: </label>
+    <input validar type="text" class="form-control" id="recibe" formControlName="recibe">
   </div>
   <div class="form-group col-xs-12 col-sm-4 offset-4">
     <label for="direccion">Dirección de Entrega*: </label>
