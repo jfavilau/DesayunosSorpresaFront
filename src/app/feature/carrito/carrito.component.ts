@@ -21,7 +21,7 @@ export class CarritoComponent implements OnInit {
         {
           this.items = x;
           this.cantidadTotal = x.length;
-          this.precioTotal = x.reduce((sum, current) => sum + (current.precio * current.cantidad), 0);
+          this.precioTotal = x.reduce((suma, actual) => suma + (actual.precio * actual.cantidad), 0);
         }
     })
   }

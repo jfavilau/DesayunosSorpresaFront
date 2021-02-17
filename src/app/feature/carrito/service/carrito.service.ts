@@ -13,46 +13,45 @@ export class CarritoService {
   constructor() { }
 
   public changeCart(newData: IItem) {
-    //Obtenemos el valor actual
-    let listCart = this.carrito.getValue();
-    //Si no es el primer item del carrito
-    if(listCart)
+
+    let listaCarrito = this.carrito.getValue();
+
+    if(listaCarrito)
     {
-      //Buscamos si ya cargamos ese item en el carrito
-      let objIndex = listCart.findIndex((obj => obj.id == newData.id));
-      //Si ya cargamos uno aumentamos su cantidad
+
+      let objIndex = listaCarrito.findIndex((obj => obj.id == newData.id));
+
       if(objIndex != -1)
       {
-        listCart[objIndex].cantidad += 1;
+        listaCarrito[objIndex].cantidad += 1;
       }
-      //Si es el primer item de ese tipo lo agregamos derecho al carrito
       else {
-        listCart.push(newData);
+        listaCarrito.push(newData);
       }
-    }
-    //Si es el primer elemento lo inicializamos
-    else {
-      listCart = [];
-      listCart.push(newData);
     }
 
-    this.carrito.next(listCart);
+    else {
+      listaCarrito = [];
+      listaCarrito.push(newData);
+    }
+
+    this.carrito.next(listaCarrito);
   }
 
   public removeElementCart(newData:IItem){
-    //Obtenemos el valor actual de carrito
-    let listCart = this.carrito.getValue();
-    //Buscamos el item del carrito para eliminar
-    let objIndex = listCart.findIndex((obj => obj.id == newData.id));
+
+    let listaCarrito = this.carrito.getValue();
+
+    let objIndex = listaCarrito.findIndex((obj => obj.id == newData.id));
     if(objIndex != -1)
     {
-      //Seteamos la cantidad en 1 (ya que los array se modifican los valores por referencia, si vovlemos a agregarlo la cantidad no se reiniciará)
-      listCart[objIndex].cantidad = 1;
-      //Eliminamos el item del array del carrito
-      listCart.splice(objIndex,1);
+
+      listaCarrito[objIndex].cantidad = 1;
+
+      listaCarrito.splice(objIndex,1);
     }
 
-    this.carrito.next(listCart);
+    this.carrito.next(listaCarrito);
 
   }
 
